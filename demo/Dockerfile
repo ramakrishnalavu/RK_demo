@@ -1,7 +1,13 @@
 FROM eclipse-temurin:17
 
-COPY target/moviebooking-0.0.1-SNAPSHOT.jar app.jar
+WORKDIR /app
 
-ENV SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/rkdb
+# Copy all project files
+COPY . .
 
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Build the project (creates jar)
+RUN chmod +x mvnw
+RUN ./mvnw clean package -DskipTests
+
+# Run the jar
+CMD ["java", "-jar", "target/*.jar"]
