@@ -38,7 +38,7 @@ services:
     plan: free
     region: oregon
     buildCommand: npm install && npm run build
-    staticPublishPath: client/dist
+    staticPublishPath: dist
     rootDir: client
     envVars:
       - key: VITE_API_URL
