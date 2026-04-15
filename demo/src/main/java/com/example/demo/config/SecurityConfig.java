@@ -40,7 +40,7 @@ public class SecurityConfig {
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .authorizeHttpRequests(auth -> auth
 
-                // 🔥 VERY IMPORTANT (fixes 403)
+                //  VERY IMPORTANT (fixes 403)
                 .requestMatchers("/api/auth/**").permitAll()
 
                 // Public APIs
@@ -67,7 +67,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
 
-        // 🔥 FINAL FIX (no more CORS issues)
+        //  FINAL FIX (no more CORS issues)
         config.setAllowedOriginPatterns(List.of("*"));
 
         config.setAllowedMethods(List.of("*"));
