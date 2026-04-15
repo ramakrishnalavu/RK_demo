@@ -39,11 +39,19 @@ public class SecurityConfig {
             .csrf(AbstractHttpConfigurer::disable)
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .authorizeHttpRequests(auth -> auth
+
+                // 🔥 VERY IMPORTANT (fixes 403)
                 .requestMatchers("/api/auth/**").permitAll()
+
+                // Public APIs
                 .requestMatchers("/api/movies/**").permitAll()
                 .requestMatchers("/api/shows/**").permitAll()
                 .requestMatchers("/api/theaters/**").permitAll()
+
+                // Admin APIs
                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
+
+                // Everything else
                 .anyRequest().authenticated()
             )
             .sessionManagement(session -> session
@@ -58,8 +66,11 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:5173"));
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+
+        // 🔥 FINAL FIX (no more CORS issues)
+        config.setAllowedOriginPatterns(List.of("*"));
+
+        config.setAllowedMethods(List.of("*"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
 
@@ -86,6 +97,3 @@ public class SecurityConfig {
         return config.getAuthenticationManager();
     }
 }
-
-
-
