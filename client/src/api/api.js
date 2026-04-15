@@ -2,8 +2,9 @@ import axios from 'axios';
 import.meta.env.VITE_API_URL
 
 const api = axios.create({
-    // baseURL: 'https://http://localhost:8080/api',
-  baseURL: 'https://rk-demo.onrender.com/api',
+  baseURL: import.meta.env.VITE_API_URL 
+    ? (import.meta.env.VITE_API_URL.endsWith('/api') ? import.meta.env.VITE_API_URL : `${import.meta.env.VITE_API_URL}/api`)
+    : 'https://rk-demo.onrender.com/api',
   headers: { 'Content-Type': 'application/json' },
 });
 
