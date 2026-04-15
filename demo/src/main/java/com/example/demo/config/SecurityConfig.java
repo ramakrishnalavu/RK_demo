@@ -40,7 +40,7 @@ public class SecurityConfig {
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .authorizeHttpRequests(auth -> auth
 
-                //  VERY IMPORTANT (fixes 403)
+                .requestMatchers("/").permitAll() // Root welcome message
                 .requestMatchers("/api/auth/**").permitAll()
 
                 // Public APIs
